@@ -12,5 +12,6 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('home');
-
+    // Member in admin/auth.
+    $router->resource('auth/members', MemberController::class);
 });
