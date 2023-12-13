@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./php-fpm
+      dockerfile: Dockerfile
+    image: production.php
+    container_name: admin_app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: prod
+    working_dir: /var/www
+    volumes:
+      - ${PHP_PROJECT}:/var/www
+      - ${PHP_INI}:/usr/local/etc/php/conf.d/local.ini
+    networks:
+        - admin_app_network
+
+  webserver:
+    image: nginx:alpine
+    container_name: admin_webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${PHP_PROJECT}:/var/www
+      - ${NGINX_CONF_D}:/etc/nginx/conf.d/
+    networks:
+      - admin_app_network
+
+networks:
+  admin_app_network:
+    driver: bridge
