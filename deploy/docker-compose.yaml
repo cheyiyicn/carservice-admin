@@ -1,32 +1,38 @@
 version: "3.7"
 
 services:
-  workspace:
+  carservice_phptool:
     build:
       context: .
       dockerfile: Dockerfile
-    image: admin_app_workspace
-    container_name: admin_app_workspace
+    image: carservice_phptool
+    container_name: carservice_phptool
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ${PROJECT_PATH}:/var/www
+      - ${LARAVEL_PROJECT_PATH}:/var/www
     networks:
-      - carservice
+      - carservice_admin_network
   # todo: add mysql container.
-  # db:
-  #   image: mysql
-  #   container_name: dreamy-db
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - app_back
-  #   environment:
-  #     MYSQL_DATABASE: ${DB_DATABASE}
-  #     MYSQL_ROOT_PASSWORD: 4ztgeU%
-  #     MYSQL_PASSWORD: ${DB_PASSWORD}
-  #     MYSQL_USER: ${DB_USERNAME}
-  #   networks:
-  #     - carservice
+  carservice_mysql:
+    image: mysql:8
+    container_name: carservice_mysql
+    restart: unless-stopped
+    depends_on:
+      - carservice_phptool
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${MYSQL_DATA_PATH}/data:/var/lib/mysql
+      - ${MYSQL_DATA_PATH}/init:/docker-entrypoint-initdb.d
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    networks:
+      - carservice_admin_network
   nginx:
     image: nginx:1.25-alpine
     container_name: prod_nginx
@@ -37,10 +43,10 @@ services:
       - 8081:80
       - 443:443
     volumes:
-      - ${PROJECT_PATH}:/var/www
-      - ${NGINX_VHOST_DIR_PATH}:/etc/nginx/conf.d/:ro
+      - ${LARAVEL_PROJECT_PATH}:/var/www
+      - ${NGINX_VHOSTS_PATH}:/etc/nginx/conf.d/:ro
     networks:
-      - carservice
+      - carservice_admin_network
 networks:
-  carservice:
+  carservice_admin_network:
     driver: bridge
