@@ -1,12 +1,12 @@
 version: "3.7"
 
 services:
-  application:
+  workspace:
     build:
       context: .
       dockerfile: Dockerfile
-    image: admin_application
-    container_name: admin_application
+    image: admin_app_workspace
+    container_name: admin_app_workspace
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -26,17 +26,20 @@ services:
   #     MYSQL_USER: ${DB_USERNAME}
   #   networks:
   #     - carservice
-  # nginx:
-  #   image: nginx:1.17-alpine
-  #   container_name: dreamy-back-nginx
-  #   restart: unless-stopped
-  #   ports:
-  #     - 8000:80
-  #   volumes:
-  #     - ./:/var/www
-  #     - ./docker-compose/vhosts:/etc/nginx/conf.d
-  #   networks:
-  #     - carservice
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: prod_nginx
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - 8081:80
+      - 443:443
+    volumes:
+      - ${PROJECT_PATH}:/var/www
+      - ${NGINX_VHOST_DIR_PATH}:/etc/nginx/conf.d/:ro
+    networks:
+      - carservice
 networks:
   carservice:
     driver: bridge
