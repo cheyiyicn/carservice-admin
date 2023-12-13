@@ -1,38 +1,42 @@
-version: "3"
+version: "3.7"
 
 services:
-  app:
+  application:
     build:
-      context: ./php-fpm
+      context: .
       dockerfile: Dockerfile
-    image: production.php
-    container_name: admin_app
+    image: admin_application
+    container_name: admin_application
     restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: prod
-    working_dir: /var/www
+    working_dir: /var/www/
     volumes:
-      - ${PHP_PROJECT}:/var/www
-      - ${PHP_INI}:/usr/local/etc/php/conf.d/local.ini
+      - ${PROJECT_PATH}:/var/www
     networks:
-        - admin_app_network
-
-  webserver:
-    image: nginx:alpine
-    container_name: admin_webserver
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ${PHP_PROJECT}:/var/www
-      - ${NGINX_CONF_D}:/etc/nginx/conf.d/
-    networks:
-      - admin_app_network
-
+      - carservice
+  # db:
+  #   image: mysql
+  #   container_name: dreamy-db
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - app_back
+  #   environment:
+  #     MYSQL_DATABASE: ${DB_DATABASE}
+  #     MYSQL_ROOT_PASSWORD: 4ztgeU%
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
+  #     MYSQL_USER: ${DB_USERNAME}
+  #   networks:
+  #     - carservice
+  # nginx:
+  #   image: nginx:1.17-alpine
+  #   container_name: dreamy-back-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8000:80
+  #   volumes:
+  #     - ./:/var/www
+  #     - ./docker-compose/vhosts:/etc/nginx/conf.d
+  #   networks:
+  #     - carservice
 networks:
-  admin_app_network:
+  carservice:
     driver: bridge
