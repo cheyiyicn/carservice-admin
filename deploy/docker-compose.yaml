@@ -13,6 +13,7 @@ services:
       - ${PROJECT_PATH}:/var/www
     networks:
       - carservice
+  # todo: add mysql container.
   # db:
   #   image: mysql
   #   container_name: dreamy-db
