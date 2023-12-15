@@ -1,4 +1,9 @@
 FROM php:8.1-fpm
+
+# China mirror
+RUN sed -i "s@http://deb.debian.org@http://mirrors.aliyun.com@g" /etc/apt/sources.list
+RUN apt-get clean
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
