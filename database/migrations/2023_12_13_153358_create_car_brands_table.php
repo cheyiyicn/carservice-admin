@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+        // car_brands 汽车品牌
+        // car_company_id 包含所属的汽车厂商 / 公司
         Schema::create('car_brands', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("car_company_id")->comment("汽车品牌的归属公司");
             $table->string("title")->comment("汽车品牌名称");
-            $table->string("description")->comment("汽车品牌描述");
-            $table->string("short_name")->comment("汽车品牌简称");
+            $table->string("english_title")->comment("汽车品牌英文名称");
+            $table->string("short_title")->comment("汽车品牌简称")->default("");
+            $table->string("type")->comment("品牌类型")->default("");
+            $table->string("description")->comment("汽车品牌描述")->default("");
             $table->timestamps();
         });
     }
