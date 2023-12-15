@@ -19,7 +19,11 @@ return new class extends Migration
             $table->string("title")->comment("汽车品牌系列名称");
             $table->string("english_title")->comment("汽车品牌系列英文名称");
             $table->string("dealer_price")->comment("汽车品牌车系经销商价格")->comment("");
+            // $table->decimal("dealer_price_min", 10, 2)->comment("经销商价格下限");
+            // $table->decimal("dealer_price_max", 10, 2)->comment("经销商价格上限");
             $table->string("offical_price")->comment("汽车品牌车系官方价格")->comment("");
+            // $table->decimal("offical_price_min", 10, 2)->comment("官方价格下限");
+            // $table->decimal("offical_price_max", 10, 2)->comment("官方价格上限");
             $table->timestamps();
         });
     }
