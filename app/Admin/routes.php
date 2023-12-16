@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Routing\Router;
+use App\Admin\Controllers\{MemberController, PartnerStoreController};
 
 Admin::routes();
 
@@ -14,4 +15,5 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     // Member in admin/auth.
     $router->resource('auth/members', MemberController::class);
+    $router->resource('partner-stores', PartnerStoreController::class);
 });
