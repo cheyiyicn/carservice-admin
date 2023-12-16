@@ -18,4 +18,7 @@
  *
  */
 
+use App\Admin\Extensions\Amap;
+
+Encore\Admin\Form::extend("amap", Amap::class);
 Encore\Admin\Form::forget(['map', 'editor']);
