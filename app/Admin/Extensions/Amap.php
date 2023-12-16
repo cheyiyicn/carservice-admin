@@ -43,8 +43,7 @@ class Amap extends Field
 (function() {
     function init() {
         // 加载同时创建 input 框
-        const tipinputEl = "<input id='tipinput' />";
-        $("#autoinput").html(tipinputEl)
+        const tipinputEl = $("#tipinput");
         
         var lat = $("#{$id_set['lat']}");
         var lng = $("#{$id_set['lng']}");
@@ -93,7 +92,7 @@ class Amap extends Field
             console.log(a);
         })
     }
-    jscode();
+
     init();
 })()
 EOT;
