@@ -32,7 +32,7 @@ class Amap extends Field
     public static function getAssets()
     {
         // todo: not public, need move in the config file.
-        $mapApiKey = '';
+        $mapApiKey = '8abc2a8fd96b7cada79e1006b101fa9c';
         $mapJs = sprintf('https://webapi.amap.com/maps?v=1.4.12&key=%s', $mapApiKey);
 
         return ['js' => $mapJs];
@@ -70,7 +70,7 @@ class Amap extends Field
             lng.val(e.lnglat.getLng());
         });
 
-        AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function(){
+        AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Geocoder'], function(){
             // 选项
             const autoOptions = {
                 input: "tipinput",
@@ -82,14 +82,14 @@ class Amap extends Field
             var placeSearch = new AMap.PlaceSearch({
                 map: map
             });
-            console.log(placeSearch);
             // 注册监听，当选中某条记录时会触发
             function select(e) {
                 placeSearch.setCity(e.poi.adcode);
                 placeSearch.search(e.poi.name);  //关键字查询查询
             }
             let a = AMap.event.addListener(autocomplete, "select", select);
-            console.log(a);
+
+            
         })
     }
 

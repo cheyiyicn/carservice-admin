@@ -8,17 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * @deprecated no need company table.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('car_companies', function (Blueprint $table) {
+        // 依赖 car_brands / ×car_company / car_brand_series
+        Schema::create('car_infos', function (Blueprint $table) {
             $table->id();
-            $table->string("title")->comment("汽车公司名称");
-            $table->string("description")->comment("汽车公司描述");
-            $table->string("short_name")->comment("汽车公司简称");
+            // todo
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car_companies');
+        Schema::dropIfExists('car_infos');
     }
 };
