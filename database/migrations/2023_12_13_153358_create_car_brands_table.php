@@ -20,9 +20,8 @@ return new class extends Migration
             /**
              * @deprecated delete this.
              */
-            $table->bigInteger("car_company_id")->comment("汽车品牌的归属公司");
             $table->string("title")->comment("汽车品牌名称");
-            $table->string("english_title")->comment("汽车品牌英文名称");
+            $table->string("english_title")->comment("汽车品牌英文名称")->default("");
             $table->string("short_title")->comment("汽车品牌简称")->default("");
             $table->string("type")->comment("品牌类型")->default("");
             $table->string("description")->comment("汽车品牌描述")->default("");

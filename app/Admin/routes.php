@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Routing\Router;
-use App\Admin\Controllers\{MemberController, PartnerStoreController};
+use App\Admin\Controllers\{
+    MemberController, PartnerStoreController, CarBrandController, CarBrandSeriesController
+};
 
 Admin::routes();
 
@@ -16,4 +18,7 @@ Route::group([
     // Member in admin/auth.
     $router->resource('auth/members', MemberController::class);
     $router->resource('partner-stores', PartnerStoreController::class);
+    // 车辆品牌车系管理
+    $router->resource('car-brands', CarBrandController::class);
+    $router->resource('car-brand-series', CarBrandSeriesController::class);
 });
