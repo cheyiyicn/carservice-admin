@@ -18,15 +18,15 @@ return new class extends Migration
             $table->id();
             $table->bigInteger("member_id")->comment("关联的用户");
             $table->bigInteger("car_owner_info_id")->comment("关联车主信息");
-            $table->bigInteger("car_info")->comment("关联车辆信息");
+            $table->bigInteger("car_info_id")->comment("关联车辆信息");
             // ? may be need invoice OR create a new table for creating invoice when the order is finished.
             // $table->bigInteger("invoice_id")->comment("关联发票");
             $table->string("order_number")->unique()->comment("自动生成的唯一订单号");
             $table->decimal("est_amount", 10, 2)->comment("预估金额");
             $table->decimal("act_amount", 10, 2)->comment("实际金额");
-            $table->timestamp("expired_at")->comment("订单过期时间");
+            $table->timestamp("expired_at")->nullable()->comment("订单过期时间");
             // 支付相关
-            $table->tinyInteger("pay_method")->comment("支付方式: 1.微信, 2.支付宝, 3.银联, 4.TBD...");
+            $table->tinyInteger("payment_method")->comment("支付方式: 1.微信, 2.支付宝, 3.银联, 4.TBD...");
             $table->timestamp("paid_at")->nullable()->comment("已经支付的时间");
             $table->tinyInteger("order_status")->default(0)->comment("订单状态");
             // 其他信息相关

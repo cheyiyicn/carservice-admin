@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\OrderStatus;
 use App\Models\UserOrder;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -26,21 +27,26 @@ class UserOrderController extends AdminController
     {
         $grid = new Grid(new UserOrder());
 
-        $grid->column('id', __('Id'));
-        $grid->column('member_id', __('Member id'));
-        $grid->column('car_owner_info_id', __('Car owner info id'));
-        $grid->column('car_info', __('Car info'));
-        $grid->column('order_number', __('Order number'));
-        $grid->column('est_amount', __('Est amount'));
-        $grid->column('act_amount', __('Act amount'));
-        $grid->column('expired_at', __('Expired at'));
-        $grid->column('pay_method', __('Pay method'));
-        $grid->column('paid_at', __('Paid at'));
-        $grid->column('order_status', __('Order status'));
-        $grid->column('comment', __('Comment'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', __('ID'));
+        $grid->column('member_id', __('用户名'));
+        // 展示用户手机号
+        // $grid->column("")
+        $grid->column('car_owner_info_id', __('车主信息'));
+        $grid->column('car_info', __('车辆信息'));
+        $grid->column('order_number', __('订单号'));
+        // $grid->column('est_amount', __('预估金额'));
+        $grid->column('act_amount', __('服务金额'));
+        // $grid->column('expired_at', __('Expired at'));
+        // $grid->column('payment_method', __('Pay method'));
+        // $grid->column('paid_at', __('Paid at'));
 
+        $grid->column('order_status', __('订单状态'))->display(function ($value) {
+            if ($value == OrderStatus::Pending->value) return "等待接单";
+            return OrderStatus::tryFrom($value)->desc();
+        });
+        // $grid->column('comment', __('Comment'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('更新时间'));
         return $grid;
     }
 
@@ -81,7 +87,7 @@ class UserOrderController extends AdminController
     {
         $form = new Form(new UserOrder());
 
-        $form->number('member_id', __('Member id'));
+        // $form->number('member_id', __('Member id'));
         $form->number('car_owner_info_id', __('Car owner info id'));
         $form->number('car_info', __('Car info'));
         $form->text('order_number', __('Order number'));

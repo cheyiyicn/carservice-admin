@@ -2,7 +2,8 @@
 
 use Illuminate\Routing\Router;
 use App\Admin\Controllers\{
-    MemberController, PartnerStoreController, CarBrandController, CarBrandSeriesController
+    MemberController, PartnerStoreController, CarBrandController, CarBrandSeriesController,
+    UserOrderController,
 };
 
 Admin::routes();
@@ -21,4 +22,6 @@ Route::group([
     // 车辆品牌车系管理
     $router->resource('car-brands', CarBrandController::class);
     $router->resource('car-brand-series', CarBrandSeriesController::class);
+    // 订单相关
+    $router->resource('user-orders', UserOrderController::class);
 });
