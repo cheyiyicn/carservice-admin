@@ -8,6 +8,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Grid\Tools\QuickCreate;
 use Encore\Admin\Show;
+use Encore\Admin\Widgets\Table;
 
 class CarBrandController extends AdminController
 {
@@ -32,7 +33,12 @@ class CarBrandController extends AdminController
             $create->text('short_title', __('短称'))->default("TBD");
         });
         $grid->column('id', __('ID'));
-        $grid->column('title', __('名称'));
+        $grid->column('title', __('名称'))->modal("车系", function (CarBrand $model) {
+            $series = $model->brandSeries()->take(10)->get()->map(function ($comment) {
+                return $comment->only(['id', 'title']);
+            });
+            return new Table(['ID', '车系名称'], $series->toArray());
+        });
         $grid->column('english_title', __('英文名称'));
         $grid->column('short_title', __('短称'));
         // $grid->column('type', __('类型'));
