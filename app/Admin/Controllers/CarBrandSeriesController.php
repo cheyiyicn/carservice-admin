@@ -29,25 +29,29 @@ class CarBrandSeriesController extends AdminController
     {
         $grid = new Grid(new CarBrandSeries());
 
-        $grid->quickCreate(function (QuickCreate $c) {
-            $c->select('brand_id', __('直属品牌'))
-                ->options(CarBrand::all()->pluck('brand_name', 'id'))
-                ->required();
-            $c->text('title', __('名称'))->required();
-            $c->text('english_title', __('英文名称'))->default("TBD");
-            $c->text('dealer_price', __('经销商售价'))->default("TBD - TBD 万");
-            $c->text('offical_price', __('官方售价'))->default("TBD - TBD 万");
-        });
+        // $grid->quickCreate(function (QuickCreate $c) {
+        //     $c->select('brand_id', __('直属品牌'))
+        //         ->options(CarBrand::all()->pluck('brand_name', 'id'))
+        //         ->required();
+        //     $c->text('title', __('名称'))->required();
+        //     $c->text('english_title', __('英文名称'))->default("TBD");
+        //     $c->text('dealer_price', __('经销商售价'))->default("TBD - TBD 万");
+        //     $c->text('official_price', __('官方售价'))->default("TBD - TBD 万");
+        // });
 
         $grid->column('series_id', __('ID'));
-        $grid->column('brand.title', __('直属品牌'));
-        $grid->column('title', __('车系名称'))->display(function ($value) {
+        $grid->column('brand.brand_name', __('直属品牌'));
+        $grid->column('series_name', __('车系名称'))->display(function ($value) {
             return $value;
         });
+        $grid->column('sub_brand_name', __('全称'));
+        $grid->column('image_url', __('图片'))->display(function () {
+            return "<span style='color: orange'>TODO</span>";
+        });
         $grid->column('dealer_price', __('经销商售价'));
-        $grid->column('offical_price', __('官方售价'));
-        $grid->column('created_at', __('创建时间'));
-        $grid->column('updated_at', __('更新时间'));
+        $grid->column('official_price', __('官方售价'));
+        $grid->column('created_at', __('创建时间'))->datetime();
+        $grid->column('updated_at', __('更新时间'))->datetime();
 
         return $grid;
     }
