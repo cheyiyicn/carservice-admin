@@ -3,9 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Models\CarBrand;
+use Encore\Admin\Actions\Action;
+use Encore\Admin\Actions\RowAction;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Grid\Filter;
 use Encore\Admin\Grid\Tools\QuickCreate;
 use Encore\Admin\Show;
@@ -45,12 +48,10 @@ class CarBrandController extends AdminController
         $grid->column("image_url", __('品牌标志'))->display(function () {
             return "<span style='color: orange'>TODO</span>";
         });
-        $grid->column('brand_name', __('品牌名称'))->modal("品牌系列", function (CarBrand $model) {
-            // $series = $model->brandSeries()->take(10)->get()->map(function ($comment) {
-            //     return $comment->only(['id', 'title']);
-            // });
-            // return new Table(['ID', '车系名称'], $series->toArray());
-        });
+        $grid->column('brand_name', __('品牌名称'))
+            ->modal("品牌系列", function (CarBrand $model) {
+                // do something here.
+            });
         $grid->column("brand_english_name", __('英文名称'));
         $grid->column("brand_type", __('车系'));
         $grid->column("brand_country", __('国家'));
