@@ -90,7 +90,9 @@ class CarBrandController extends AdminController
         $form->text('brand_name', __('品牌名称'))->required();
         $form->text('pinyin', __('中文首字母'))->help("如 \"大众\" 填 \"D\"")->required();
         $form->text('brand_english_name', __('品牌英文名称'))->default("TBD");
-        $form->text("image_url", __('品牌标志'))->default("");
+        $form->text("image_url", __('品牌标志'))
+            ->help("<span style='color: orange'>TODO</span>")
+            ->default("");
         $form->text("brand_type", __("车系"))->default("TBD");
         $form->text("brand_country", __("国家"))->default("TBD");
         $form->textarea("content_abstract", __("品牌描述"))->default("TBD");
