@@ -8,6 +8,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Form\Field\Decimal;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Filter;
 use Encore\Admin\Grid\Tools\QuickCreate;
 use Encore\Admin\Show;
 
@@ -28,6 +29,12 @@ class CarBrandSeriesController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new CarBrandSeries());
+
+        $grid->filter(function (Filter $filter) {
+            // disable default filter.
+            $filter->disableIdFilter();
+            $filter->equal('brand_id', __('汽车品牌'))->select(CarBrand::all()->pluck("brand_name", "brand_id"));
+        });
 
         // $grid->quickCreate(function (QuickCreate $c) {
         //     $c->select('brand_id', __('直属品牌'))

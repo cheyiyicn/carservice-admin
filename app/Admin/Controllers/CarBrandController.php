@@ -6,6 +6,7 @@ use App\Models\CarBrand;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Filter;
 use Encore\Admin\Grid\Tools\QuickCreate;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
@@ -27,6 +28,13 @@ class CarBrandController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new CarBrand());
+
+        // filter.
+        $grid->filter(function (Filter $filter) {
+            // disable default filter.
+            $filter->disableIdFilter();
+        });
+        
         // Quick create
         // $grid->quickCreate(function (QuickCreate $create) {
         //     $create->text('brand_name', __('名称'));
