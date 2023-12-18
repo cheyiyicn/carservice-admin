@@ -10,7 +10,9 @@ class CarBrandSeries extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'brand_id';
+
     public function brand(): BelongsTo {
-        return $this->belongsTo(CarBrand::class, "brand_id");
+        return $this->belongsTo(CarBrand::class, "brand_id", "brand_id");
     }
 }

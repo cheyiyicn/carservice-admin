@@ -6,6 +6,7 @@ use App\Models\CarBrand;
 use App\Models\CarBrandSeries;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
+use Encore\Admin\Form\Field\Decimal;
 use Encore\Admin\Grid;
 use Encore\Admin\Grid\Tools\QuickCreate;
 use Encore\Admin\Show;
@@ -29,8 +30,8 @@ class CarBrandSeriesController extends AdminController
         $grid = new Grid(new CarBrandSeries());
 
         $grid->quickCreate(function (QuickCreate $c) {
-            $c->select('car_brand_id', __('直属品牌'))
-                ->options(CarBrand::all()->pluck('title', 'id'))
+            $c->select('brand_id', __('直属品牌'))
+                ->options(CarBrand::all()->pluck('brand_name', 'id'))
                 ->required();
             $c->text('title', __('名称'))->required();
             $c->text('english_title', __('英文名称'))->default("TBD");
@@ -38,12 +39,11 @@ class CarBrandSeriesController extends AdminController
             $c->text('offical_price', __('官方售价'))->default("TBD - TBD 万");
         });
 
-        $grid->column('id', __('ID'));
+        $grid->column('series_id', __('ID'));
         $grid->column('brand.title', __('直属品牌'));
         $grid->column('title', __('车系名称'))->display(function ($value) {
             return $value;
         });
-        // $grid->column('english_title', __('英文名称'));
         $grid->column('dealer_price', __('经销商售价'));
         $grid->column('offical_price', __('官方售价'));
         $grid->column('created_at', __('创建时间'));
@@ -83,13 +83,24 @@ class CarBrandSeriesController extends AdminController
     {
         $form = new Form(new CarBrandSeries());
 
-        $form->select('car_brand_id', __('直属品牌'))
-            ->options(CarBrand::all()->pluck('title', 'id'))
+        $form->select('brand_id', __('直属品牌'))
+            ->options(CarBrand::all()
+            ->pluck('brand_name', 'brand_id'))
             ->required();
-        $form->text('title', __('名称'))->required();
-        $form->text('english_title', __('英文名称'))->default("TBD");
-        $form->text('dealer_price', __('经销商售价'))->default("TBD - TBD 万");
-        $form->text('offical_price', __('官方售价'))->default("TBD - TBD 万");
+        $form->text('series_name', __('名称'))->required();
+        $form->text("sub_brand_name", __('子品牌名称'))->required();
+        $form->text("image_url", __('图片'))->default("TBD");
+        // 官方售价
+        $form->decimal("official_price_up", __("官方最高售价(万)"))->default(0.00);
+        $form->decimal("official_price_down", __("官方最低售价(万)"))->default(0.00);
+        $form->text("official_price", __("官方售价区间"))->default("TBD");
+        // 经销商售价
+        $form->decimal("dealer_price_up", __("经销商最高售价(万)"))->default(0.00);
+        $form->decimal("dealer_price_down", __("经销商最低售价(万)"))->default(0.00);
+        $form->text("dealer_price", __("经销商售价区间"))->default("TBD");
+        $form->text("category_name", __("汽车类型"))->default("TBD");
+
+        $form->switch("business_status", __("是否正在营业"))->default(1);
 
         return $form;
     }

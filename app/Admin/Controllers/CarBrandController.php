@@ -34,7 +34,9 @@ class CarBrandController extends AdminController
         // });
         // Columns
         $grid->column('brand_id', __('ID'));
-        // $grid->column("image_url", __('车标'));
+        $grid->column("image_url", __('品牌标志'))->display(function () {
+            return "<span style='color: orange'>TODO</span>";
+        });
         $grid->column('brand_name', __('品牌名称'))->modal("品牌系列", function (CarBrand $model) {
             // $series = $model->brandSeries()->take(10)->get()->map(function ($comment) {
             //     return $comment->only(['id', 'title']);
@@ -46,8 +48,8 @@ class CarBrandController extends AdminController
         $grid->column("brand_country", __('国家'));
         // $grid->column("content_abstract", __('描述'));
         $grid->column("business_status", __('是否在营业'));
-        $grid->column('created_at', __('创建时间'));
-        $grid->column('updated_at', __('更新时间'));
+        $grid->column('created_at', __('创建时间'))->date("Y-m-d");
+        $grid->column('updated_at', __('更新时间'))->date("Y-m-d");
 
         return $grid;
     }

@@ -10,7 +10,9 @@ class CarBrand extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'brand_id';
+
     public function brandSeries(): HasMany {
-        return $this->hasMany(CarBrandSeries::class, "brand_id", "id");
+        return $this->hasMany(CarBrandSeries::class, "brand_id", "brand_id");
     }
 }
