@@ -11,6 +11,6 @@ class CarBrand extends Model
     use HasFactory;
 
     public function brandSeries(): HasMany {
-        return $this->hasMany(CarBrandSeries::class, "car_brand_id", "id");
+        return $this->hasMany(CarBrandSeries::class, "brand_id", "id");
     }
 }

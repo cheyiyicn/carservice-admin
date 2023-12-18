@@ -27,22 +27,25 @@ class CarBrandController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new CarBrand());
-        $grid->quickCreate(function (QuickCreate $create) {
-            $create->text('title', __('名称'));
-            $create->text('english_title', __('英文名称'))->default("TBD");
-            $create->text('short_title', __('短称'))->default("TBD");
+        // Quick create
+        // $grid->quickCreate(function (QuickCreate $create) {
+        //     $create->text('brand_name', __('名称'));
+        //     $create->text('brand_english_name', __('英文名称'))->default("TBD");
+        // });
+        // Columns
+        $grid->column('brand_id', __('ID'));
+        // $grid->column("image_url", __('车标'));
+        $grid->column('brand_name', __('品牌名称'))->modal("品牌系列", function (CarBrand $model) {
+            // $series = $model->brandSeries()->take(10)->get()->map(function ($comment) {
+            //     return $comment->only(['id', 'title']);
+            // });
+            // return new Table(['ID', '车系名称'], $series->toArray());
         });
-        $grid->column('id', __('ID'));
-        $grid->column('title', __('名称'))->modal("车系", function (CarBrand $model) {
-            $series = $model->brandSeries()->take(10)->get()->map(function ($comment) {
-                return $comment->only(['id', 'title']);
-            });
-            return new Table(['ID', '车系名称'], $series->toArray());
-        });
-        $grid->column('english_title', __('英文名称'));
-        $grid->column('short_title', __('短称'));
-        // $grid->column('type', __('类型'));
-        // $grid->column('description', __('描述'));
+        $grid->column("brand_english_name", __('英文名称'));
+        $grid->column("brand_type", __('车系'));
+        $grid->column("brand_country", __('国家'));
+        // $grid->column("content_abstract", __('描述'));
+        $grid->column("business_status", __('是否在营业'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
 
@@ -51,6 +54,7 @@ class CarBrandController extends AdminController
 
     /**
      * Make a show builder.
+     * todo: _
      *
      * @param mixed $id
      * @return Show
@@ -81,12 +85,14 @@ class CarBrandController extends AdminController
     {
         $form = new Form(new CarBrand());
 
-        $form->text('car_company_id', __('汽车品牌'))->default(0)->disable();
-        $form->text('title', __('名称'))->required();
-        $form->text('english_title', __('英文名称'))->default("TBD");
-        $form->text('short_title', __('短名称'))->default("TBD");
-        $form->text('type', __('Type'))->default("TBD");
-        $form->textarea('description', __('品牌描述'))->default("TBD");
+        $form->text('brand_name', __('品牌名称'))->required();
+        $form->text('pinyin', __('中文首字母'))->help("如 \"大众\" 填 \"D\"")->required();
+        $form->text('brand_english_name', __('品牌英文名称'))->default("TBD");
+        $form->text("image_url", __('品牌标志'))->default("");
+        $form->text("brand_type", __("车系"))->default("TBD");
+        $form->text("brand_country", __("国家"))->default("TBD");
+        $form->textarea("content_abstract", __("品牌描述"))->default("TBD");
+        $form->switch("business_status", __('是否正在营业'))->default(1);
 
         return $form;
     }

@@ -11,6 +11,6 @@ class CarBrandSeries extends Model
     use HasFactory;
 
     public function brand(): BelongsTo {
-        return $this->belongsTo(CarBrand::class, "car_brand_id");
+        return $this->belongsTo(CarBrand::class, "brand_id");
     }
 }
