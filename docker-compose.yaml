@@ -2,12 +2,13 @@ version: '3'
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:8
     container_name: prod_mysql
     restart: unless-stopped
     volumes:
       - /datastore/docker/prod/mysql:/var/lib/mysql
       - /datastore/docker/prod/mysql/init:/docker-entrypoint-initdb.d
+      - 
     env_file:
       - ./deploy/.env
     environment:

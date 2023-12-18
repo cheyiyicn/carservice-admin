@@ -28,6 +28,7 @@ services:
     volumes:
       - ${MYSQL_DATA_PATH}/data:/var/lib/mysql
       - ${MYSQL_DATA_PATH}/init:/docker-entrypoint-initdb.d
+      # - ${MYSQL_SQL_SOURCE}:/
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
