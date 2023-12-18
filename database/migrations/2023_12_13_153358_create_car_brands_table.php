@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string("brand_type")/*->charset("GB2312")*/->default("")->comment("车系");
             $table->string("brand_country")/*->charset("GB2312")*/->default("")->comment("车辆所属国家");
             $table->text("content_abstract")/*->charset("GB2312")*/->default("")->comment("描述");
-            $table->string("pinyin")->default("")->comment("拼音 (或拼音首字母)");
+            $table->char("pinyin", 1)->default("")->comment("拼音 (或拼音首字母)");
             $table->timestamps();
         });
     }

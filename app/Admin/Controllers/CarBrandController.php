@@ -88,7 +88,12 @@ class CarBrandController extends AdminController
         $form = new Form(new CarBrand());
 
         $form->text('brand_name', __('品牌名称'))->required();
-        $form->text('pinyin', __('中文首字母'))->help("如 \"大众\" 填 \"D\"")->required();
+        $form->text('pinyin', __('中文首字母'))
+            ->rules("required|size:1", [
+                "size" => "首字母只能一位英文字符"
+            ])
+            ->help("如 \"大众\" 填 \"D\"")
+            ->required();
         $form->text('brand_english_name', __('品牌英文名称'))->default("TBD");
         $form->text("image_url", __('品牌标志'))
             ->help("<span style='color: orange'>TODO</span>")
