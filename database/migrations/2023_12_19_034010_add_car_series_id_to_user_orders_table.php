@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        // ? may be no need it.
-        // 依赖 car_brands / ×car_company / car_brand_series
-        Schema::create('car_infos', function (Blueprint $table) {
-            $table->id();
-            // todo
-            $table->timestamps();
+        Schema::table('user_orders', function (Blueprint $table) {
+            // Car Brand Series related
+            $table->bigInteger("car_brand_series_id")->after("car_brand_id");
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car_infos');
+        Schema::table('user_orders', function (Blueprint $table) {
+            $table->dropColumn('car_brand_series_id');
+        });
     }
 };
