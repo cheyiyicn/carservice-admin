@@ -2,8 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\OrderStatus;
-use App\Models\UserOrder;
+use App\Models\{UserOrder, OrderStatus};
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;

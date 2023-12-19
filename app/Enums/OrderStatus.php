@@ -1,29 +1,6 @@
 <?php
 
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class UserOrder extends Model
-{
-    use HasFactory;
-    // |- 预约 (等待商家浏览订单)
-    // |-- 后台检查订单 (补充服务费)
-    // |-- 用户 (接受报价)
-    // |---- 接受: 确认订单 (订单支付倒计时 30 分钟)
-    // |---- 不接受: -----|
-    // |-- 超时订单 ------|
-    // |-- 取消订单 ------|
-    public function _()
-    {
-    }
-}
-
-interface Description
-{
-    function desc(): string;
-}
+namespace App\Enums;
 
 // ? 应该抽离到一个文件中
 enum OrderStatus: int implements Description
@@ -57,23 +34,5 @@ enum OrderStatus: int implements Description
 
     public function get($value): string {
         return $this->get($value);
-    }
-}
-
-enum PaymentMethod: int implements Description
-{
-    case Unknown = 0;   //
-    case Alipay = 1;    // 支付宝
-    case WeChatPay = 2; // 微信
-    case UnionPay = 3;  // 银联
-
-    public function desc(): string
-    {
-        return match ($this) {
-            self::Unknown => "未知",
-            self::Alipay => "支付宝",
-            self::WeChatPay => "微信",
-            self::UnionPay => "银联",
-        };
     }
 }
