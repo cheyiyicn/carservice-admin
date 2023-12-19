@@ -11,12 +11,13 @@ use Tests\TestCase;
 class UserOrderTest extends TestCase
 {
     /**
-     * todo: 测试用户下单流程
-     * todo: 模拟用户下单操作
-     * todo: - 车主信息 CarOwnerInfo ✔
+     * 测试用户下单流程
+     * 模拟用户下单操作
+     *
+     * - 车主信息 CarOwnerInfo ✔
      * @deprecated - 车辆信息 CarInfo
-     * todo: - 用户需求 UserOrder - comment
-     * todo: - 创建订单 UserOrder
+     * - 用户需求 UserOrder - comment ✔
+     * - 创建订单 UserOrder ✔
      *
      * @return void
      */
