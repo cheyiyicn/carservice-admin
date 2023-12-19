@@ -10,7 +10,9 @@ use Tests\TestCase;
 class CarBrandTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * Test getting brands.
+     *
+     * test ok.
      *
      * @return void
      */
