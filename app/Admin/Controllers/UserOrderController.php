@@ -29,10 +29,13 @@ class UserOrderController extends AdminController
 
         $grid->column('id', __('ID'));
         $grid->column('member_id', __('用户名'));
+        // show car brand.
+        $grid->column("car_brand_id");
+        // show series of car brand.
+        $grid->column("car_brand__series_id");
         // 展示用户手机号
         // $grid->column("")
         $grid->column('car_owner_info_id', __('车主信息'));
-        $grid->column('car_info', __('车辆信息'));
         $grid->column('order_number', __('订单号'));
         // $grid->column('est_amount', __('预估金额'));
         $grid->column('act_amount', __('服务金额'));
