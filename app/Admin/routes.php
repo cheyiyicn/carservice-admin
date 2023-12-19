@@ -1,10 +1,12 @@
 <?php
 
-use Illuminate\Routing\Router;
 use App\Admin\Controllers\{
     MemberController, PartnerStoreController, CarBrandController, CarBrandSeriesController,
     UserOrderController,
 };
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
+use Encore\Admin\Facades\Admin;
 
 Admin::routes();
 
