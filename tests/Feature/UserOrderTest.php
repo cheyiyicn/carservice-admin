@@ -33,13 +33,13 @@ class UserOrderTest extends TestCase
         $lastInsertId = "0";
         if ($infoCount > 0 && $stillCreating) {
             echo "仍然创建\n";
-            $status = DB::insert("INSERT INTO `car_owner_infos`(`name`, `user_id`, `phone_number`, `multilevel_address`, `full_address`) VALUES('陈某人', $currentUserId, '15718334375', '广东省-东莞市-万江街道', '详细地址')");
+            $status = DB::insert($this->create_car_owner_info_sql(), ['陈某人', $currentUserId, '15718334375', '广东省-东莞市-万江街道', '详细地址']);
             echo "创建车主信息: $status\n";
             $lastInsertId = DB::getPdo()->lastInsertId();
             // 仍然创建
         } else {
             // 创建
-            $status = DB::insert("INSERT INTO `car_owner_infos`(`name`, `user_id`, `phone_number`, `multilevel_address`, `full_address`) VALUES('陈某人', $currentUserId, '15718334375', '广东省-东莞市-万江街道', '详细地址')");
+            $status = DB::insert($this->create_car_owner_info_sql(), ['陈某人', $currentUserId, '15718334375', '广东省-东莞市-万江街道', '详细地址']);
             echo "创建车主信息: $status\n";
             $lastInsertId = DB::getPdo()->lastInsertId();
         }
@@ -60,8 +60,16 @@ class UserOrderTest extends TestCase
         // 默认支付方式
         $paymentMethod = PaymentMethod::Unknown->value;
         // 创建
-        $query = "INSERT INTO `user_orders`(`member_id`, `car_brand_id`, `car_brand_series_id`, `car_owner_info_id`, `car_info_id`, `order_number`, `order_status`, `comment`, `est_amount`, `act_amount`, `payment_method`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = $this->create_user_order_sql();
         $status = DB::insert($query, [$userId, $carBrandId, $carBrandSeriesId, $carOwnerInfoId, 0, $orderNumber, $orderStatus, $requirements, 0.00, 0.00, $paymentMethod]);
         echo "创建订单: $status\n";
+    }
+
+    private function create_user_order_sql(): string {
+        return "INSERT INTO `user_orders`(`member_id`, `car_brand_id`, `car_brand_series_id`, `car_owner_info_id`, `car_info_id`, `order_number`, `order_status`, `comment`, `est_amount`, `act_amount`, `payment_method`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    }
+
+    private function create_car_owner_info_sql(): string {
+        return $status = "INSERT INTO `car_owner_infos`(`name`, `user_id`, `phone_number`, `multilevel_address`, `full_address`) VALUES(?, ?, ?, ?, ?)";
     }
 }
