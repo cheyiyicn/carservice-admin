@@ -12,6 +12,7 @@ enum PaymentMethod: int implements Description
     public function desc(): string
     {
         return match ($this) {
+            self::Unknown => "未知",
             self::Alipay => "支付宝",
             self::WeChatPay => "微信",
             self::UnionPay => "银联",
