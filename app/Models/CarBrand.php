@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
 
 class CarBrand extends Model
 {
@@ -14,5 +14,9 @@ class CarBrand extends Model
 
     public function brandSeries(): HasMany {
         return $this->hasMany(CarBrandSeries::class, "brand_id", "brand_id");
+    }
+
+    public function userOrder(): BelongsTo {
+        return $this->belongsTo(UserOrder::class, "car_brand_id", "brand_id");
     }
 }

@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\CarBrand;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class UserOrder extends Model
 {
@@ -17,6 +21,15 @@ class UserOrder extends Model
     // |-- 取消订单 ------|
     public function _()
     {
+    }
+
+    public function carBrand(): HasOne {
+        return $this->hasOne(CarBrand::class, "brand_id", "car_brand_id");
+    }
+
+    // FIXME: Should fix relationship.
+    public function carSeries(): HasOneThrough {
+        return $this->hasOneThrough(CarBrandSeries::class, CarBrand::class, "brand_id", "brand_id", "brand_id", "brand_id");
     }
 }
 

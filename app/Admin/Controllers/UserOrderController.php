@@ -6,7 +6,10 @@ use App\Models\{UserOrder, OrderStatus};
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Model;
 use Encore\Admin\Show;
+use Encore\Admin\Show\Panel;
+use Encore\Admin\Widgets\Box;
 
 class UserOrderController extends AdminController
 {
@@ -27,15 +30,19 @@ class UserOrderController extends AdminController
         $grid = new Grid(new UserOrder());
 
         $grid->column('id', __('ID'));
-        $grid->column('member_id', __('用户名'));
+        $grid->column('order_number', __('订单号'))->expand(function (UserOrder $model) {
+            return "订单详情 HTML";
+        });
+        $grid->column('member_id', __('用户名'))->display(function () {
+
+        });
         // show car brand.
-        $grid->column("car_brand_id");
+        $grid->column("carBrand.brand_name", "汽车品牌");
         // show series of car brand.
-        $grid->column("car_brand__series_id");
+        $grid->column("carSeries.series_name", "汽车品牌系列");
         // 展示用户手机号
         // $grid->column("")
         $grid->column('car_owner_info_id', __('车主信息'));
-        $grid->column('order_number', __('订单号'));
         // $grid->column('est_amount', __('预估金额'));
         $grid->column('act_amount', __('服务金额'));
         // $grid->column('expired_at', __('Expired at'));
