@@ -41,8 +41,8 @@ class UserOrderController extends AdminController
         // $grid->column('expired_at', __('Expired at'));
         // $grid->column('payment_method', __('Pay method'));
         // $grid->column('paid_at', __('Paid at'));
-
         $grid->column('order_status', __('订单状态'))->display(function ($value) {
+            if ($this->deleted_at) return "<b style='color: red'>已删除</b>";
             if ($value == OrderStatus::Pending->value) return "等待接单";
             return OrderStatus::tryFrom($value)->desc();
         });
