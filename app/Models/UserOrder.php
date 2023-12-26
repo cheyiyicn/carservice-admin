@@ -28,8 +28,8 @@ class UserOrder extends Model
     }
 
     // FIXME: Should fix relationship.
-    public function carSeries(): HasOneThrough {
-        return $this->hasOneThrough(CarBrandSeries::class, CarBrand::class, "brand_id", "brand_id", "brand_id", "brand_id");
+    public function carSeries(): HasOne {
+        return $this->hasOne(CarBrandSeries::class, "series_id", "car_brand_series_id");
     }
 }
 
