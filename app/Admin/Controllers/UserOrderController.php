@@ -117,11 +117,18 @@ class UserOrderController extends AdminController
     private function onChangeActAmount(Model $model)
     {
         // ==== 更改状态 ==== //
-        // 若状态是 `待用户付款` 或 `已确认价格` !(待用户付款代表已经确认价格)
-        // 1.更新价格
-        // 2.将会被更新为 `待用户确认价格`
+        // 1.若状态是 `待用户付款` 或 `已确认价格` !(待用户付款代表已经确认价格)
+        // 1.1.更新价格
+        // 1.2.将会被更新为 `待用户确认价格`
         // 若状态是 `待用户付款`
         if ($model->order_status == OrderStatus::ToBePaid->value) {
+            $model->order_status = OrderStatus::ToBeAcceptedByUser->value;
+            $model->save();
+        }
+        // 2.若状态是 `待商家接单`
+        // 2.1.更新价格
+        // 2.2.更新状态为待用户确认
+        if ($model->order_status == OrderStatus::Pending->value) {
             $model->order_status = OrderStatus::ToBeAcceptedByUser->value;
             $model->save();
         }
