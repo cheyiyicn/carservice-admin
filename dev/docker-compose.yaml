@@ -10,6 +10,8 @@ services:
     container_name: admin-dev-php
     restart: unless-stopped
     working_dir: /var/www/
+    ports:
+      - 8000:8000
     volumes:
       - ${PROJECT_PATH}:/var/www
     networks:
@@ -30,7 +32,7 @@ services:
     volumes:
       - ${MYSQL_DATA_PATH}/data:/var/lib/mysql
       - ${MYSQL_DATA_PATH}/init:/docker-entrypoint-initdb.d
-      - ${MYSQL_SQL_SOURCE_PATH}:~
+      - ${MYSQL_SQL_SOURCE_PATH}:/var/sql
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - 3306:3306

@@ -10,8 +10,7 @@
 # 进入 PHP 容器的命令行模式
 docker exec -it admin-dev-php bash
 # 开启服务器
-php artisan serve
-
+php artisan serve --host 0.0.0.0
 ```
 ## 使用 MYSQL 终端
 ```bash
