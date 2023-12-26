@@ -2,14 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\{UserOrder, OrderStatus};
+use App\Models\{CarOwnerInfo, UserOrder};
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Grid\Model;
 use Encore\Admin\Show;
-use Encore\Admin\Show\Panel;
-use Encore\Admin\Widgets\Box;
+use App\Enums\{OrderStatus};
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 
 class UserOrderController extends AdminController
 {
@@ -33,18 +33,15 @@ class UserOrderController extends AdminController
         $grid->column('order_number', __('订单号'))->expand(function (UserOrder $model) {
             return "订单详情 HTML";
         });
-        $grid->column('member_id', __('用户名'))->display(function () {
-
+        $grid->column('member.username', __('用户名'))->display(function ($value) {
+            return $value;
         });
         // show car brand.
         $grid->column("carBrand.brand_name", "汽车品牌");
         // show series of car brand.
         $grid->column("carSeries.series_name", "汽车品牌系列");
-        // 展示用户手机号
-        // $grid->column("")
-        $grid->column('car_owner_info_id', __('车主信息'));
         // $grid->column('est_amount', __('预估金额'));
-        $grid->column('act_amount', __('服务金额'));
+        $grid->column('act_amount', __('服务金额'))->color("#008000")->editable('text');
         // $grid->column('expired_at', __('Expired at'));
         // $grid->column('payment_method', __('Pay method'));
         // $grid->column('paid_at', __('Paid at'));
@@ -108,6 +105,33 @@ class UserOrderController extends AdminController
         $form->switch('order_status', __('Order status'));
         $form->textarea('comment', __('Comment'));
 
+        $form->saving(function (Form $form) {
+            if ($form->_method == "PUT") {
+                $this->onChangeActAmount($form->model());
+            }
+        });
+
         return $form;
+    }
+
+    private function onChangeActAmount(Model $model)
+    {
+        // ==== 更改状态 ==== //
+        // 若状态是 `待用户付款` 或 `已确认价格` !(待用户付款代表已经确认价格)
+        // 1.更新价格
+        // 2.将会被更新为 `待用户确认价格`
+        // 若状态是 `待用户付款`
+        if ($model->order_status == OrderStatus::ToBePaid->value) {
+            $model->order_status = OrderStatus::ToBeAcceptedByUser->value;
+            $model->save();
+        }
+    }
+}
+
+class ShowCarOwnerInfo implements Renderable
+{
+    public function render($key = null)
+    {
+        print "1";
     }
 }
