@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  # PHP 服务
+  dev-php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: admin-dev-php
+    container_name: admin-dev-php
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ${PROJECT_PATH}:/var/www
+    networks:
+      - admin-dev-network
+  # MYSQL 服务
+  dev-mysql:
+    image: mysql:8
+    container_name: admin-dev-mysql
+    restart: unless-stopped
+    depends_on:
+      # 等待 PHP 镜像
+      - dev-php
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${MYSQL_DATA_PATH}/data:/var/lib/mysql
+      - ${MYSQL_DATA_PATH}/init:/docker-entrypoint-initdb.d
+      - ${MYSQL_SQL_SOURCE_PATH}:~
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    networks:
+      - admin-dev-network
+
+networks:
+  admin-dev-network:
+    driver: bridge
