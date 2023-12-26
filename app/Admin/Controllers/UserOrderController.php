@@ -41,6 +41,7 @@ class UserOrderController extends AdminController
         // show series of car brand.
         $grid->column("carSeries.series_name", "汽车品牌系列");
         // $grid->column('est_amount', __('预估金额'));
+        // todo: 处理如果已经过期的订单
         $grid->column('act_amount', __('服务金额'))->color("#008000")->editable('text');
         // $grid->column('expired_at', __('Expired at'));
         // $grid->column('payment_method', __('Pay method'));
