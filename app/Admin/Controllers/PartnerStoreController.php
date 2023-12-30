@@ -93,8 +93,8 @@ class PartnerStoreController extends AdminController
         $form->text('store_number', __('门店编号'))->default("TBD");
 
         // $form->latlong('latitude', 'longitude', 'Position', "选择位置")->default(['lat' => 90, 'lng' => 90])->height(600)->zoom(12);
-        $form->text('address', __('地址'))->default("TBD");
-        $form->text('full_address', __('完整地址'));
+        $form->text('address', __('地址'))->disable();
+        $form->text('full_address', __('完整地址'))->help("选择地址自动填充");
         $form->amap('latitude', "longitude", __("地图"));
 
         $form->text('phone_number', __('负责人手机号'))->required();
