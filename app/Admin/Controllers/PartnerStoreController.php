@@ -4,11 +4,10 @@ namespace App\Admin\Controllers;
 
 use App\Models\PartnerStore;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Latlong\Extension;
 use Encore\Admin\Show;
-use Illuminate\Support\Facades\Log;
 
 class PartnerStoreController extends AdminController
 {
@@ -83,6 +82,9 @@ class PartnerStoreController extends AdminController
      */
     protected function form()
     {
+        // AMap security config fn.
+        // if change the proxy url, please go to `public/js/amap/proxy.js`.
+        $this->loadAMapSecurityConfig();        
         $form = new Form(new PartnerStore());
 
         $form->text('title', __('门店名称'));
@@ -103,5 +105,9 @@ class PartnerStoreController extends AdminController
         $form->switch('status', __('状态'));
 
         return $form;
+    }
+
+    private function loadAMapSecurityConfig() {
+        Admin::headerJs("js/amap/proxy.js");
     }
 }

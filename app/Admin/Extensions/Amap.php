@@ -6,8 +6,6 @@ use Encore\Admin\Form\Field;
 
 class Amap extends Field
 {
-    protected static $api = '//webapi.amap.com/maps?v=1.4.12&key=%s';
-
     protected $view = "admin.amap";
 
     protected $column = [];
@@ -32,7 +30,7 @@ class Amap extends Field
     public static function getAssets()
     {
         // todo: not public, need move in the config file.
-        $mapApiKey = '8abc2a8fd96b7cada79e1006b101fa9c';
+        $mapApiKey = 'e8f05960883dbd922965622f11d0f6a5';
         $mapJs = sprintf('https://webapi.amap.com/maps?v=1.4.12&key=%s', $mapApiKey);
 
         return ['js' => $mapJs];
