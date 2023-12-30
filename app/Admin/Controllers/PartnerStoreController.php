@@ -87,22 +87,22 @@ class PartnerStoreController extends AdminController
         $this->loadAMapSecurityConfig();        
         $form = new Form(new PartnerStore());
 
-        $form->text('title', __('门店名称'));
-        $form->text('short_title', __('门店短名称'));
-        $form->text('english_title', __('门店英文名称'));
-        $form->text('store_number', __('门店编号'));
+        $form->text('title', __('门店名称'))->required();
+        $form->text('short_title', __('门店短名称'))->default("TBD");
+        $form->text('english_title', __('门店英文名称'))->default("TBD");
+        $form->text('store_number', __('门店编号'))->default("TBD");
 
         // $form->latlong('latitude', 'longitude', 'Position', "选择位置")->default(['lat' => 90, 'lng' => 90])->height(600)->zoom(12);
-        $form->text('address', __('地址'));
+        $form->text('address', __('地址'))->default("TBD");
         $form->text('full_address', __('完整地址'));
         $form->amap('latitude', "longitude", __("地图"));
 
-        $form->text('phone_number', __('负责人手机号'));
+        $form->text('phone_number', __('负责人手机号'))->required();
         // $form->decimal('longitude', __('Longitude'));
         // $form->decimal('latitude', __('Latitude'));
-        $form->text('description', __('门店描述信息'));
-        $form->textarea('html_description', __('Html 门店描述信息'));
-        $form->switch('status', __('状态'));
+        $form->text('description', __('门店描述信息'))->default("TBD");
+        $form->textarea('html_description', __('Html 门店描述信息'))->default("TBD");
+        $form->switch('status', __('状态'))->default(1);
 
         return $form;
     }

@@ -42,7 +42,7 @@ class Amap extends Field
     function init() {
         // 加载同时创建 input 框
         const tipinputEl = $("#tipinput");
-        
+        const fullAddress = $("#full_address");
         var lat = $("#{$id_set['lat']}");
         var lng = $("#{$id_set['lng']}");
 
@@ -82,12 +82,12 @@ class Amap extends Field
             });
             // 注册监听，当选中某条记录时会触发
             function select(e) {
+                console.log(e.poi.district + e.poi.address + e.poi.name)
+                fullAddress.val(e.poi.district + e.poi.address + e.poi.name);
                 placeSearch.setCity(e.poi.adcode);
                 placeSearch.search(e.poi.name);  //关键字查询查询
             }
             let a = AMap.event.addListener(autocomplete, "select", select);
-
-            
         })
     }
 
