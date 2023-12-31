@@ -11,6 +11,7 @@ use Encore\Admin\Show;
 
 class PartnerStoreController extends AdminController
 {
+    // 首次加载该模块时加载服务
     public function __construct()
     {
         $this->loadAMapSecurityConfig();        
