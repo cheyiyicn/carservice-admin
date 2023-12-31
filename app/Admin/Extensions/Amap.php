@@ -82,7 +82,11 @@ class Amap extends Field
             });
             // 注册监听，当选中某条记录时会触发
             function select(e) {
-                console.log(e.poi.district + e.poi.address + e.poi.name)
+                console.log(e.poi.location.lng);
+                console.log(e.poi.location.lat);
+                
+                lat.val(e.poi.location.lat);
+                lng.val(e.poi.location.lng);
                 fullAddress.val(e.poi.district + e.poi.address + e.poi.name);
                 placeSearch.setCity(e.poi.adcode);
                 placeSearch.search(e.poi.name);  //关键字查询查询
