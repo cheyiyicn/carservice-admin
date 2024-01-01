@@ -4,7 +4,7 @@ namespace App\Admin\Extensions;
 
 use Encore\Admin\Form\Field;
 
-class Amap extends Field
+class AMap extends Field
 {
     protected $view = "admin.amap";
 
@@ -94,7 +94,6 @@ class Amap extends Field
             let a = AMap.event.addListener(autocomplete, "select", select);
         })
     }
-
     init();
 })()
 EOT;
