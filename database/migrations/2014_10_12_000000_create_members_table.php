@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('avatar_url')->default("");
-            $table->string('phone_number', 11)->unique();
+            // $table->string('phone_number', 11)->unique();
+            $table->string('phone_number', 11);
             $table->tinyInteger("locked")->default(0);
             $table->string('password')->nullable();
             $table->rememberToken();
