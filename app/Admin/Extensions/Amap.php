@@ -4,10 +4,8 @@ namespace App\Admin\Extensions;
 
 use Encore\Admin\Form\Field;
 
-class Amap extends Field
+class AMap extends Field
 {
-    protected static $api = '//webapi.amap.com/maps?v=1.4.12&key=%s';
-
     protected $view = "admin.amap";
 
     protected $column = [];
@@ -32,7 +30,7 @@ class Amap extends Field
     public static function getAssets()
     {
         // todo: not public, need move in the config file.
-        $mapApiKey = '8abc2a8fd96b7cada79e1006b101fa9c';
+        $mapApiKey = 'e8f05960883dbd922965622f11d0f6a5';
         $mapJs = sprintf('https://webapi.amap.com/maps?v=1.4.12&key=%s', $mapApiKey);
 
         return ['js' => $mapJs];
@@ -44,7 +42,7 @@ class Amap extends Field
     function init() {
         // 加载同时创建 input 框
         const tipinputEl = $("#tipinput");
-        
+        const fullAddress = $("#full_address");
         var lat = $("#{$id_set['lat']}");
         var lng = $("#{$id_set['lng']}");
 
@@ -84,15 +82,18 @@ class Amap extends Field
             });
             // 注册监听，当选中某条记录时会触发
             function select(e) {
+                console.log(e.poi.location.lng);
+                console.log(e.poi.location.lat);
+                
+                lat.val(e.poi.location.lat);
+                lng.val(e.poi.location.lng);
+                fullAddress.val(e.poi.district + e.poi.address + e.poi.name);
                 placeSearch.setCity(e.poi.adcode);
                 placeSearch.search(e.poi.name);  //关键字查询查询
             }
             let a = AMap.event.addListener(autocomplete, "select", select);
-
-            
         })
     }
-
     init();
 })()
 EOT;
