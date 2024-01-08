@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,7 +43,7 @@ class Member extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function userOrder(): BelongsTo {
-        return $this->belongsTo(UserOrder::class, "id", "member_id");
+    public function userOrder(): HasOne {
+        return $this->hasOne(UserOrder::class, "id", "member_id");
     }
 }

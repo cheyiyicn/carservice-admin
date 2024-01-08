@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\CarBrand;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\{HasOne, BelongsTo};
 
 class UserOrder extends Model
 {
@@ -31,8 +31,8 @@ class UserOrder extends Model
     }
 
     // FIXME: 修复错误的关联
-    public function member(): HasOne {
-        return $this->hasOne(Member::class, "id", "member_id");
+    public function member(): BelongsTo {
+        return $this->belongsTo(Member::class, "member_id");
     }
 
     public function carOwnerInfo(): HasOne {
