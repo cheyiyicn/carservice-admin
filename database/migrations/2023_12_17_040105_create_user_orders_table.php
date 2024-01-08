@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('user_orders', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("member_id")->comment("关联的用户");
+            // ! will be removed.
+            // todo: use m2m relation. m2m table: `m2m_order_car_owner_infos`
             $table->bigInteger("car_owner_info_id")->comment("关联车主信息");
             $table->bigInteger("car_info_id")->comment("关联车辆信息");
             // ? may be need invoice OR create a new table for creating invoice when the order is finished.

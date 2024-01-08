@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         // 用户车主信息 //
+        // todo: use m2m relation. m2m table: `m2m_order_car_owner_infos`
         Schema::create('car_owner_infos', function (Blueprint $table) {
             $table->id();
             $table->string("name")->comment("车主姓名");
