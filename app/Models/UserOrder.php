@@ -30,7 +30,12 @@ class UserOrder extends Model
         return $this->hasOne(CarBrandSeries::class, "series_id", "car_brand_series_id");
     }
 
+    // FIXME: 修复错误的关联
     public function member(): HasOne {
         return $this->hasOne(Member::class, "id", "member_id");
+    }
+
+    public function carOwnerInfo(): HasOne {
+        return $this->hasOne(CarOwnerInfo::class, 'user_order_id');
     }
 }

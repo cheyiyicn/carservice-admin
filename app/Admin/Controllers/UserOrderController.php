@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserOrderController extends AdminController
 {
+   
     /**
      * Title for current resource.
      *
