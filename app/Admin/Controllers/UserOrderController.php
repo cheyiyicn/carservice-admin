@@ -151,6 +151,10 @@ class UserOrderController extends AdminController
             ]);
     }
 
+    public function update($id)
+    {
+    }
+
     private function getPartnerStores($address, $gap) {
         $url = "https://restapi.amap.com/v3/geocode/geo?key=%s&address=%s";
         $realUrl = sprintf($url, env("AMAP_KEY"), $address);

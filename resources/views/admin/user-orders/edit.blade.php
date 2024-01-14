@@ -3,7 +3,7 @@
         <h3 class="box-title">调整订单</h3>
     </div>
     <div class="box-body">
-        <form action="" method="post" class="" role="form" pjax-container>
+        <form action="{{ admin_url('user-orders') }}/{{ $order['id'] }}" method="post" class="" role="form" pjax-container>
             <div class="form-group">
                 <label>订单号</label>
                 <input type="text" class="form-control" value="{{ $order['order_number'] }}" disabled />
@@ -69,7 +69,11 @@
                     </span>
                 </span>
             </div>
-
+            <input type="hidden" name="_method" value="PUT" class="_method">
+            <div class="btn-group pull-left">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
         </form>
         {{ $order['id'] }}
     </div>
