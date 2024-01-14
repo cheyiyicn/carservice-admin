@@ -36,6 +36,6 @@ class UserOrder extends Model
     }
 
     public function carOwnerInfo(): HasOne {
-        return $this->hasOne(CarOwnerInfo::class, 'user_order_id');
+        return $this->hasOne(CarOwnerInfo::class, 'user_order_id', 'id');
     }
 }

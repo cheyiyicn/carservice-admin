@@ -11,6 +11,6 @@ class CarOwnerInfo extends Model
     use HasFactory;
 
     public function userOrder(): BelongsTo {
-        return $this->belongsTo(UserOrder::class, "user_order_id");
+        return $this->belongsTo(UserOrder::class, "user_order_id", "id");
     }
 }
