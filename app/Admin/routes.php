@@ -2,7 +2,7 @@
 
 use App\Admin\Controllers\{
     MemberController, PartnerStoreController, CarBrandController, CarBrandSeriesController,
-    UserOrderController,
+    UserOrderController, CarReplacementController,
 };
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +26,6 @@ Route::group([
     $router->resource('car-brand-series', CarBrandSeriesController::class);
     // 订单相关
     $router->resource('user-orders', UserOrderController::class);
+    // 汽车零件相关
+    $router->resource('car-replacements', CarReplacementController::class);
 });
