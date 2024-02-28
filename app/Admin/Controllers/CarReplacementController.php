@@ -37,12 +37,12 @@ class CarReplacementController extends AdminController
                     
                     $form->decimal("est_f32_price", "预估服务价")->default(0.00)->rules("required");
                     $form->hidden("est_u64_price");
-                    $form->hidden("counter");
+                    // $form->hidden("counter");
                     $form->hidden('_token')->default(csrf_token());
-                    $form->saved(function (Form $form) {
-                        $form->est_u64_price = $form->est_u64_price * 100;
-                        $form->counter = 0;
-                    });
+                    // $form->saved(function (Form $form) {
+                    //     $form->est_u64_price = $form->est_u64_price * 100;
+                    //     $form->counter = 0;
+                    // });
                     $column->append((new Box(trans('admin.new'), $form))->style('success'));
                 });
             });
@@ -110,11 +110,20 @@ class CarReplacementController extends AdminController
         $form->text('title', __('名称'));
         $form->decimal('est_f32_price', __('预估服务价'))->help("单位: 元");
         $form->hidden("est_u64_price");
-        $form->hidden("counter");
+        // $form->hidden("counter");
 
         $form->saving(function (Form $form) {
-            $form->est_u64_price = $form->est_u64_price * 100;
-            $form->counter = 0;
+            // if ($form->isEditing()) {
+            //     // check counter of parent element.
+            //     if ($form->parent_id === 0) {
+            //         $form->counter = 1;
+            //     } else {
+            //         $p = CarReplacement::where("id", $form->parent_id)->first();
+            //         $form->counter = $p->counter + 1;
+            //     }
+            // }
+            
+            $form->est_u64_price = $form->est_f32_price * 100;
         });
 
         return $form;
