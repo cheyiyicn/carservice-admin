@@ -35,7 +35,7 @@ services:
       - ${MYSQL_DEV_SQL_SOURCE_PATH}:/var/sql
     command: --default-authentication-plugin=mysql_native_password
     ports:
-      - 3306:3306
+      - 8806:3306
     networks:
       - carservice_dev_network
   carservice_dev_nginx:
