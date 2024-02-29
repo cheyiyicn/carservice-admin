@@ -2,43 +2,56 @@ version: '3.7'
 
 services:
   # PHP 服务
-  dev-php:
+  carservice_dev_php:
     build:
       context: .
       dockerfile: Dockerfile
-    image: admin-dev-php
-    container_name: admin-dev-php
+    image: carservice_dev_php
+    container_name: carservice_dev_php
     restart: unless-stopped
     working_dir: /var/www/
     ports:
       - 8000:8000
     volumes:
-      - ${PROJECT_PATH}:/var/www
+      - ${LARAVEL_DEV_PROJECT_PATH}:/var/www
     networks:
-      - admin-dev-network
+      - carservice_dev_network
   # MYSQL 服务
-  dev-mysql:
+  carservice_dev_mysql:
     image: mysql:8
-    container_name: admin-dev-mysql
+    container_name: carservice_dev_mysql
     restart: unless-stopped
     depends_on:
       # 等待 PHP 镜像
-      - dev-php
+      - carservice_dev_php
     environment:
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_DEV_USER}
+      - MYSQL_PASSWORD=${MYSQL_DEV_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DEV_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_DEV_ROOT_PASSWORD}
     volumes:
-      - ${MYSQL_DATA_PATH}/data:/var/lib/mysql
-      - ${MYSQL_DATA_PATH}/init:/docker-entrypoint-initdb.d
-      - ${MYSQL_SQL_SOURCE_PATH}:/var/sql
+      - ${MYSQL_DEV_DATA_PATH}/data:/var/lib/mysql
+      - ${MYSQL_DEV_DATA_PATH}/init:/docker-entrypoint-initdb.d
+      - ${MYSQL_DEV_SQL_SOURCE_PATH}:/var/sql
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - 3306:3306
     networks:
-      - admin-dev-network
-
+      - carservice_dev_network
+  carservice_dev_nginx:
+    image: nginx:1.25-alpine
+    container_name: carservice_dev_nginx
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - 8084:80
+      - 5443:443
+    volumes:
+      - ${LARAVEL_DEV_PROJECT_PATH}:/var/www
+      - ${NGINX_VHOSTS_PATH}:/etc/nginx/conf.d/:ro
+    networks:
+      - carservice_dev_network
 networks:
-  admin-dev-network:
+  carservice_dev_network:
     driver: bridge

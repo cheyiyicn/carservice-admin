@@ -13,7 +13,6 @@ services:
       - ${LARAVEL_PROJECT_PATH}:/var/www
     networks:
       - carservice_admin_network
-  # todo: add mysql container.
   carservice_mysql:
     image: mysql:8
     container_name: carservice_mysql
@@ -48,6 +47,7 @@ services:
       - ${NGINX_VHOSTS_PATH}:/etc/nginx/conf.d/:ro
     networks:
       - carservice_admin_network
+  # todo: add redis container.
 networks:
   carservice_admin_network:
     driver: bridge
