@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     ports:
-      - 8000:8000
+      - 9001:9000
     volumes:
       - ${LARAVEL_DEV_PROJECT_PATH}:/var/www
     networks:
@@ -32,7 +32,7 @@ services:
     volumes:
       - ${MYSQL_DEV_DATA_PATH}/data:/var/lib/mysql
       - ${MYSQL_DEV_DATA_PATH}/init:/docker-entrypoint-initdb.d
-      - ${MYSQL_DEV_SQL_SOURCE_PATH}:/var/sql
+      # - ${MYSQL_DEV_SQL_SOURCE_PATH}:/var/sql
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - 8806:3306
