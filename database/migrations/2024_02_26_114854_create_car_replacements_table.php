@@ -17,8 +17,12 @@ return new class extends Migration
             $table->id();
             $table->bigInteger("parent_id");
             $table->string("title");
-            $table->decimal("est_f32_price"); // 浮点
-            $table->unsignedBigInteger("est_u64_price"); // 整型
+            // 高端
+            $table->decimal("hm_est_f32_price"); // 浮点
+            $table->unsignedBigInteger("hm_est_u64_price"); // 整型
+            // 低端
+            $table->decimal("lm_est_f32_price"); // 浮点
+            $table->unsignedBigInteger("lm_est_u64_price"); // 整型
             $table->integer("counter")->default(1);
             $table->timestamps();
         });

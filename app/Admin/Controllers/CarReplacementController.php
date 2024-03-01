@@ -35,8 +35,11 @@ class CarReplacementController extends AdminController
                     $form->select("parent_id", "父级选项")->options(CarReplacement::selectOptions());
                     $form->text('title', "名称")->rules('required');
                     
-                    $form->decimal("est_f32_price", "预估服务价")->default(0.00)->rules("required");
-                    $form->hidden("est_u64_price");
+                    $form->divider('服务费');
+                    $form->decimal("lm_est_f32_price", __("低端车型服务价"))->default(0.00)->rules("required")->help("单位: 元");
+                    $form->hidden("lm_est_u64_price");
+                    $form->decimal("hm_est_f32_price", __("高端车型服务价"))->default(0.00)->rules("required")->help("单位: 元");
+                    $form->hidden("hm_est_u64_price");
                     // $form->hidden("counter");
                     $form->hidden('_token')->default(csrf_token());
                     // $form->saved(function (Form $form) {
@@ -108,8 +111,12 @@ class CarReplacementController extends AdminController
 
         $form->select('parent_id', __('父级配件'))->options(CarReplacement::selectOptions());
         $form->text('title', __('名称'));
-        $form->decimal('est_f32_price', __('预估服务价'))->help("单位: 元");
-        $form->hidden("est_u64_price");
+        
+        $form->divider('服务费');
+        $form->decimal("lm_est_f32_price", __("低端车型服务价"))->help("单位: 元");
+        $form->hidden("lm_est_u64_price");
+        $form->decimal("hm_est_f32_price", __("高端车型服务价"))->help("单位: 元");
+        $form->hidden("hm_est_u64_price");
         // $form->hidden("counter");
 
         $form->saving(function (Form $form) {
@@ -124,6 +131,8 @@ class CarReplacementController extends AdminController
             // }
             
             $form->est_u64_price = $form->est_f32_price * 100;
+            $form->lm_est_u64_price = $form->lm_est_f32_price * 100;
+            $form->hm_est_u64_price = $form->hm_est_f32_price * 100;
         });
 
         return $form;
