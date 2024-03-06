@@ -7,11 +7,14 @@ enum OrderStatus: int implements Description
 {
     case Pending = 0;                   // 等待商家接单
     case AwaitingPayment = 1;           // 等待用户付款
-    case AwaitingAssignInstaller = 2;   // 等待付款
-    case AwaitingInstallation = 3;      // 已取消
-    case Completed = 4;                 // 已退款
-    case Cancelled = 5;                 // 已付款
-    case Refunded = 6;                  // 待安装
+    case AwaitingAssignInstaller = 2;   // 等待分配工作人员
+    case AwaitingInstallation = 3;      // 等待安装
+    case Completed = 4;                 // 已完成
+    case Cancelled = 5;                 // 已取消
+
+    case RequestRefund = 6;             // 发起退款
+    case Refunding = 7;                 // 退款中
+    case Refunded = 8;                  // 已退款
 
     public function desc(): string
     {
@@ -22,6 +25,9 @@ enum OrderStatus: int implements Description
             OrderStatus::AwaitingInstallation => "等待安装",
             OrderStatus::Completed => "已完成",
             OrderStatus::Cancelled => "已取消",
+            
+            OrderStatus::RequestRefund => "发起退款",
+            OrderStatus::Refunding => "发起退款",
             OrderStatus::Refunded => "已退款",
         };
     }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('order_comments', function (Blueprint $table) {
             $defaultMaxRate = 5;
             $table->id();
-            $table->unsignedBigInteger("order_id");
+            $table->unsignedBigInteger("user_order_id");
             $table->unsignedBigInteger("user_id");
             $table->timestamp("published_at")->nullable();
             // ? if need the below column?
