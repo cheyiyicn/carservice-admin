@@ -18,6 +18,15 @@ enum OrderStatus: int implements Description
 
     public function desc(): string
     {
+        // Pending = "等待商家接单", // 1.待处理
+        // AwaitingPayment = "等待用户付款", // 1.待处理
+        // AwaitingAssignInstaller = "等待分配安装人员", // 2.进行中
+        // AwaitingInstallation = "等待安装", // 2.进行中
+        // Completed = "已完成", // 3.已完成
+        // Cancelled = "已取消", // 3.已完成
+        // RequestRefund = "发起退款", // 2.进行中
+        // Refunding = "发起退款", // 1.待处理
+        // Refunded = "已退款", // 3.已完成
         return match ($this) {
             OrderStatus::Pending => "等待商家接单",
             OrderStatus::AwaitingPayment => "等待用户付款",
